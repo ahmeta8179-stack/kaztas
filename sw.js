@@ -1,4 +1,4 @@
-const V = 'kaztas-v1';
+const V = 'kaztas-v2';
 const CORE = ['./', 'index.html', 'manifest.webmanifest', 'logo.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
@@ -18,7 +18,7 @@ self.addEventListener('fetch', e => {
 
   // Sayfa: önce internet (güncellemeler gelsin), yoksa kayıtlı kopya
   if (req.mode === 'navigate') {
-    e.respondWith(fetch(req).then(res => {
+    e.respondWith(fetch(req, { cache: 'no-cache' }).then(res => {
       const copy = res.clone();
       caches.open(V).then(c => c.put('index.html', copy));
       return res;
